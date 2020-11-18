@@ -1,15 +1,28 @@
 <template>
   <div class="home">
+    <Nav />
     <h1>Home</h1>
+    <Posts :token="token" :page="0" />
   </div>
 </template>
 
 <script>
 import forum from "@/forum";
 import sync from "@/forum/sync";
+import Nav from "@/components/HomeNav";
+import Posts from "@/components/Posts";
 
 export default {
   name: "Home",
+  data(){
+    return {
+    }
+  },
+  computed: {
+    token(){
+      return this.$store.state.token;
+    }
+  },
   async created() {
     this.preventUnauthorize();
     await this.myInfo();
@@ -32,6 +45,10 @@ export default {
         });
       }
     }
+  },
+  components: {
+    Nav,
+    Posts
   }
 };
 </script>

@@ -9,7 +9,6 @@
 body {
   margin: 0;
   box-sizing: border-box;
-  min-height: 100vh;
 }
 * {
   outline: none;
@@ -31,6 +30,21 @@ a {
   &:active {
     color: #004d99;
   }
+  &.dark {
+    color: #4d4d4d;
+    &:hover {
+      color: #333;
+    }
+    &:active {
+      color: #1a1a1a;
+    }
+  }
+}
+.mobi-width-container {
+  width: auto;
+  min-width: 300px;
+  max-width: 600px;
+  margin: auto;
 }
 .app-loading {
   position: fixed;
