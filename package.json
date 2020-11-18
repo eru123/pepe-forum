@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "idb-keyval": "^3.2.0",
+    "mitt": "^2.1.0",
     "pepejs": "^1.0.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",

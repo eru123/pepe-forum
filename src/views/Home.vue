@@ -1,18 +1,40 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h1>Home</h1>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import forum from "@/forum";
+import sync from "@/forum/sync";
 
 export default {
   name: "Home",
-  components: {
-    HelloWorld
+  async created() {
+    this.preventUnauthorize();
+    console.log(this.$store.state.my_info);
+
+    await this.myInfo();
+    console.log(this.$store.state.my_info);
+  },
+  methods: {
+    preventUnauthorize() {
+      if (this.$store.state.token.length <= 0) {
+        this.$router.push({ name: "Login" });
+      }
+    },
+    async myInfo() {
+      if (typeof this.$store.state.my_info.id != "number") {
+        await forum.myInfo(this.$store.state.token).then(async e => {
+          if (typeof e.data == "object") {
+            if (typeof e.data.data == "object") {
+              this.$store.commit("my_info", e.data.data);
+              await sync.toLocal();
+            }
+          }
+        });
+      }
+    }
   }
 };
 </script>

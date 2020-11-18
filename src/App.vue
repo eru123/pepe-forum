@@ -1,9 +1,14 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div>
+    <div
+      @loading:class="
+        'loading-global';
+
+
+      "
+    ></div>
+    <router-view></router-view>
   </div>
-  <router-view />
 </template>
 
 <style lang="scss">
@@ -28,3 +33,15 @@
   }
 }
 </style>
+<script>
+import sync from "./forum/sync";
+export default {
+  name: "App",
+  async created() {
+    await sync.both();
+    this.emitter.on("loading", function(value) {
+      console.log("global-loading-status:", value);
+    });
+  }
+};
+</script>
