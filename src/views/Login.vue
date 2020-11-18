@@ -50,28 +50,33 @@ export default {
       }
     },
     submitForm() {
-      this.error = "";
-      this.errors = [];
-      this.emitter.emit("loading", true);
+      
+      this.emitter.emit("app-loading", true);
       forum
         .login(this.user, this.pass)
         .then(async e => {
-          console.log(e.data);
           if (typeof e.data == "object" && typeof e.data.token == "string") {
             this.$store.commit("token", e.data.token);
             await sync.toLocal();
+            this.error = "";
+            this.errors = [];
             this.preventAuthorize();
+            
           } else if (typeof e.data.error == "string") {
             this.error = e.data.error;
           } else if (typeof e.data.errors == "object") {
+            this.error = ""
             this.errors = e.data.errors;
+          } else {
+            this.errors = [];
           }
         })
         .catch(() => {
           this.error = "Unknown error, try again.";
+          this.errors = [];
         })
         .finally(() => {
-          this.emitter.emit("loading", false);
+          this.emitter.emit("app-loading", false);
         });
     }
   }

@@ -12,10 +12,7 @@ export default {
   name: "Home",
   async created() {
     this.preventUnauthorize();
-    console.log(this.$store.state.my_info);
-
     await this.myInfo();
-    console.log(this.$store.state.my_info);
   },
   methods: {
     preventUnauthorize() {

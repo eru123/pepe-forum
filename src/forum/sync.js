@@ -1,11 +1,11 @@
-import { Store, get, set } from "idb-keyval";
+import { Store, get, set, clear } from "idb-keyval";
 import store from "../store";
 
 var forumdb = new Store("pepe", "forum");
 
-// function delay(ms) {
-//   return new Promise(resolve => setTimeout(resolve, ms));
-// }
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function forEachValue(obj, fn) {
   Object.keys(obj).forEach(function(key) {
@@ -43,6 +43,9 @@ var toApp = async function() {
     store.state[key] = local || store.state[key];
   }
 };
+var clearLocal = async function(){
+  await clear(forumdb);
+}
 var both = async function() {
   await toApp();
   await toLocal();
@@ -50,5 +53,7 @@ var both = async function() {
 export default {
   toLocal,
   toApp,
-  both
+  both,
+  clearLocal,
+  delay
 };

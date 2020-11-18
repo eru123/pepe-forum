@@ -1,6 +1,15 @@
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
+  min-height: 100vh;
 }
 * {
   outline: none;
@@ -10,7 +19,7 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: #333;
+  color: #2c3e50;
 }
 a {
   font-weight: bold;
@@ -23,9 +32,19 @@ a {
     color: #004d99;
   }
 }
+.app-loading {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
 .centered-container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,7 +55,7 @@ a {
   flex-direction: column;
   min-width: 250px;
   .header {
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
   }
   input,
   button {
@@ -77,12 +96,10 @@ a {
   margin-bottom: 1em;
   border: 1px solid #e62200;
   color: #b31b00;
-  text-transform: uppercase;
   text-align: center;
   li {
     text-align: left;
     color: #b31b00;
-    text-transform: capitalize;
   }
 }
 .btn-primary {
