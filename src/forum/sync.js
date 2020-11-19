@@ -43,9 +43,9 @@ var toApp = async function() {
     store.state[key] = local || store.state[key];
   }
 };
-var clearLocal = async function(){
+var clearLocal = async function() {
   await clear(forumdb);
-}
+};
 var both = async function() {
   await toApp();
   await toLocal();

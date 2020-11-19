@@ -50,7 +50,6 @@ export default {
       }
     },
     submitForm() {
-      
       this.emitter.emit("app-loading", true);
       forum
         .login(this.user, this.pass)
@@ -61,11 +60,10 @@ export default {
             this.error = "";
             this.errors = [];
             this.preventAuthorize();
-            
           } else if (typeof e.data.error == "string") {
             this.error = e.data.error;
           } else if (typeof e.data.errors == "object") {
-            this.error = ""
+            this.error = "";
             this.errors = e.data.errors;
           } else {
             this.errors = [];

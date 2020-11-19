@@ -14,12 +14,11 @@ import Posts from "@/components/Posts";
 
 export default {
   name: "Home",
-  data(){
-    return {
-    }
+  data() {
+    return {};
   },
   computed: {
-    token(){
+    token() {
       return this.$store.state.token;
     }
   },

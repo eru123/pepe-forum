@@ -50,45 +50,56 @@ export default {
   },
   methods: {
     preventAuthorize() {
-      if (typeof this.$store.state.token == "string" && this.$store.state.token.length > 0) {
+      if (
+        typeof this.$store.state.token == "string" &&
+        this.$store.state.token.length > 0
+      ) {
         this.$router.push({ name: "Home" });
       }
     },
     submitForm() {
-      if(this.pass == this.cpass) {
+      if (this.pass == this.cpass) {
         this.emitter.emit("loading", true);
-      forum
-        .register(this.user, this.pass, this.fname, this.lname)
-        .then(async e => {
-          console.log(e.data);
-          if (typeof e.data == "object" && typeof e.data.result == "boolean" && e.data.result == true) {
-            if(confirm("Your account is sucessfully created, do you want to login now?")){
-              this.$router.push({name:'Login'});
+        forum
+          .register(this.user, this.pass, this.fname, this.lname)
+          .then(async e => {
+            console.log(e.data);
+            if (
+              typeof e.data == "object" &&
+              typeof e.data.result == "boolean" &&
+              e.data.result == true
+            ) {
+              if (
+                confirm(
+                  "Your account is sucessfully created, do you want to login now?"
+                )
+              ) {
+                this.$router.push({ name: "Login" });
+              } else {
+                this.user = "";
+                this.fname = "";
+                this.lname = "";
+                this.pass = "";
+                this.cpass = "";
+              }
+              this.preventAuthorize();
+            } else if (typeof e.data.error == "string") {
+              this.error = e.data.error;
+            } else if (typeof e.data.errors == "object") {
+              this.error = "";
+              this.errors = e.data.errors;
             } else {
-              this.user = ""
-              this.fname = ""
-              this.lname = ""
-              this.pass = ""
-              this.cpass = ""
+              this.errors = [];
             }
-            this.preventAuthorize();
-          } else if (typeof e.data.error == "string") {
-            this.error = e.data.error;
-          } else if (typeof e.data.errors == "object") {
-            this.error = "";
-            this.errors = e.data.errors;
-          } else {
+          })
+          .catch(e => {
+            console.log(e);
+            this.error = "Unknown error, try again.";
             this.errors = [];
-          }
-        })
-        .catch((e) => {
-          console.log(e)
-          this.error = "Unknown error, try again.";
-          this.errors = [];
-        })
-        .finally(() => {
-          this.emitter.emit("loading", false);
-        });
+          })
+          .finally(() => {
+            this.emitter.emit("loading", false);
+          });
       } else {
         this.error = "Password does not match";
         this.errors = [];
