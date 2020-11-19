@@ -24,27 +24,30 @@ export default {
     };
 
     var tokenCheck = async () => {
-      if(this.$store.state.token.length > 0){
-        await forum.watchAuth(this.$store.state.token)
-        .then(e =>{
-          if(typeof e.data == "object" && typeof e.data.auth == "boolean"){
-            if(e.data.auth === false){
-              this.$router.push({name: "Logout"});
+      if (this.$store.state.token.length > 0) {
+        await forum
+          .watchAuth(this.$store.state.token)
+          .then(e => {
+            if (typeof e.data == "object" && typeof e.data.auth == "boolean") {
+              if (e.data.auth === false) {
+                this.$router.push({ name: "Logout" });
+              }
             }
-          }
-        })
-        .catch(() => console.warn("Failed to authenticate the app. retrying in a minute"));
-      } 
+          })
+          .catch(() =>
+            console.warn("Failed to authenticate the app. retrying in a minute")
+          );
+      }
       await sync.delay(9999);
       await tokenCheck();
-    }
+    };
 
     this.emitter.on("app-loading", e => {
       globalLoading(e);
     });
 
+    await sync.delay(5000);
     await tokenCheck();
-
   }
 };
 </script>

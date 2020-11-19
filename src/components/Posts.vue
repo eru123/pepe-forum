@@ -1,5 +1,6 @@
 <template>
   <div class="posts mobi-width-container">
+    <div class="header">Posts ({{ posts.length }})</div>
     <div v-for="(p, k) in posts" :key="k" class="post">
       <router-link
         class="title dark"
@@ -18,6 +19,12 @@
 .posts {
   padding: 1em 0.5em;
   text-align: left;
+  .header {
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-bottom: 0.5em;
+    color: gray;
+  }
   .post {
     margin-bottom: 1em;
     border-radius: 0.3em;

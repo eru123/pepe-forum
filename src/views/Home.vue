@@ -2,6 +2,7 @@
   <div class="home">
     <Nav />
     <h1>Home</h1>
+    <CreatePost :token="token" />
     <Posts :token="token" :page="0" />
   </div>
 </template>
@@ -11,6 +12,7 @@ import forum from "@/forum";
 import sync from "@/forum/sync";
 import Nav from "@/components/HomeNav";
 import Posts from "@/components/Posts";
+import CreatePost from "@/components/CreatePost";
 
 export default {
   name: "Home",
@@ -47,7 +49,8 @@ export default {
   },
   components: {
     Nav,
-    Posts
+    Posts,
+    CreatePost
   }
 };
 </script>
