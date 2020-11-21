@@ -20,12 +20,8 @@
         <button class="btn-primary" @click="publish">Publish</button>
       </div>
     </div>
-    <div
-      class="create-post-button btn-secondary"
-      v-else
-      @click="editing = true"
-    >
-      Create new post
+    <div class="create-post-button btn-primary" v-else @click="editing = true">
+      Ask a Question
     </div>
   </div>
 </template>
@@ -100,12 +96,16 @@
       padding: 1em;
       font-family: Arial, Helvetica, sans-serif;
     }
+    input[type="text"]:focus,
+    textarea:focus {
+      background: #e6f7ff;
+    }
     .actions {
       text-align: right;
       padding: 0.5em 1em;
       button {
         margin-left: 1em;
-        border-radius: 5px;
+        border-radius: 20px;
         border: 0;
         padding: 0.5em 0.8em;
         font-weight: bold;
@@ -143,6 +143,7 @@ export default {
                 this.content = [];
                 this.editing = false;
                 alert("Your post has been published");
+                this.emitter.emit("post-refresh", { limit: 0, offset: 0 });
               } else if (typeof e.data.error == "string") {
                 this.error = e.data.error;
               } else if (typeof e.data.errors == "object") {

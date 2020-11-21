@@ -1,6 +1,9 @@
 <template>
   <div class="posts mobi-width-container">
     <div class="header">Posts ({{ posts.length }})</div>
+    <div v-if="retrieving" class="posts mobi-width-container">
+      <h3>Loading please wait ...</h3>
+    </div>
     <div v-for="(p, k) in posts" :key="k" class="post">
       <router-link
         class="title dark"
@@ -62,20 +65,32 @@ export default {
   name: "HomeNav",
   data() {
     return {
-      posts: {}
+      posts: {},
+      retrieving: false
     };
   },
   async created() {
     await this.retrievePosts();
+
+    this.emitter.on("post-refresh", async value => {
+      console.log(value);
+      await this.retrievePosts();
+    });
   },
   methods: {
-    async retrievePosts() {
-      forum.readPosts(this.token, 0, 0).then(e => {
-        if (typeof e.data == "object" && typeof e.data.data == "object") {
-          this.posts = e.data.data;
-          console.log(this.posts);
-        }
-      });
+    async retrievePosts(limit = 0, token = 0) {
+      this.retrieving = true;
+      forum
+        .readPosts(this.token, limit, token)
+        .then(e => {
+          if (typeof e.data == "object" && typeof e.data.data == "object") {
+            this.posts = e.data.data;
+            console.log(this.posts);
+          }
+        })
+        .finally(() => {
+          this.retrieving = false;
+        });
     }
   },
   props: {
