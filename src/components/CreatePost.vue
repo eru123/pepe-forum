@@ -9,10 +9,10 @@
           <li v-for="(e, k) in errors" :key="k">{{ e }}</li>
         </div>
       </div>
-      <input type="text" placeholder="Title" v-model="title" />
+      <input type="text" placeholder="Question Title" v-model="title" />
       <textarea
         rows="10"
-        placeholder="Content here"
+        placeholder="Describe your question here ..."
         v-model="content"
       ></textarea>
       <div class="actions">
@@ -88,6 +88,7 @@
       border-right: 0;
       border-bottom: 0;
       padding: 1em;
+      font-weight: bolder;
     }
     textarea {
       resize: none;
